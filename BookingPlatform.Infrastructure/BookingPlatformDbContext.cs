@@ -26,5 +26,11 @@ namespace BookingPlatform.Infrastructure
         public DbSet<City> Cities { get; set; }
         public DbSet<FeaturedDeal> FeaturedDeals { get; set; }
 
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

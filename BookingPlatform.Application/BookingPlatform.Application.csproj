@@ -10,7 +10,6 @@
     <Folder Include="Features\Booking\Commands\" />
     <Folder Include="Features\Booking\Queries\" />
     <Folder Include="Features\City\Commands\" />
-    <Folder Include="Features\City\Queries\" />
     <Folder Include="Features\Hotel\Commands\" />
     <Folder Include="Features\Hotel\Queries\" />
     <Folder Include="Features\Room\Commands\" />
