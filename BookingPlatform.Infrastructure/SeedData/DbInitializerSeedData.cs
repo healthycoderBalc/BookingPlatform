@@ -28,16 +28,6 @@ namespace BookingPlatform.Infrastructure.SeedData
             SeedRoomRelatedEntities.InitializeRoomImages(dbContext);
             SeedRoomRelatedEntities.InitializeFeaturedDeals(dbContext);
         }
-
-
-     
-
-      
-
-   
-
-
-
     }
 
 }

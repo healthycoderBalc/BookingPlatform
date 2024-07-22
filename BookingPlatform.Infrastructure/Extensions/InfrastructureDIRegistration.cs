@@ -1,12 +1,16 @@
-﻿using BookingPlatform.Application.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using BookingPlatform.Infrastructure.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+using BookingPlatform.Application.Interfaces;
+using Microsoft.Extensions.Configuration;
+using BookingPlatform.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System;
+
 
 namespace BookingPlatform.Infrastructure.Extensions
 {
@@ -18,7 +22,12 @@ namespace BookingPlatform.Infrastructure.Extensions
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
             o => o.EnableRetryOnFailure()));
 
-            services.AddScoped(typeof(IRepository<>), typeof(IRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+
+            services.AddIdentity<User, IdentityRole>()
+            .AddEntityFrameworkStores<BookingPlatformDbContext>()
+            .AddDefaultTokenProviders();
+
             return services;
         }
     }

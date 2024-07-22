@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookingPlatform.Application.Features.City.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace BookingPlatform.Application.Profiles
     {
         public CityProfile()
         {
-            
+            CreateMap<Domain.Entities.City, CityDto>()
+                .ReverseMap();
         }
     }
 }

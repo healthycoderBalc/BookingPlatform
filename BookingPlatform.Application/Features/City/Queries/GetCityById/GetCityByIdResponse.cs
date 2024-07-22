@@ -6,10 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookingPlatform.Application.Features.City.Queries.GetCities
+namespace BookingPlatform.Application.Features.City.Queries.GetCityById
 {
-    public class GetCitiesResponse : BaseResponse
+    public class GetCityByIdResponse : BaseResponse
     {
-        public ICollection<CityDto> Cities { get; set; }
+        public CityDto City { get; set; }
     }
 }
