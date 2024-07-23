@@ -23,6 +23,8 @@ namespace BookingPlatform.Infrastructure.Extensions
             o => o.EnableRetryOnFailure()));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<IAmenityRepository, AmenityRepository>();
+
 
             services.AddIdentity<User, IdentityRole>()
             .AddEntityFrameworkStores<BookingPlatformDbContext>()

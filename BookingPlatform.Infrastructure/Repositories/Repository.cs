@@ -10,7 +10,7 @@ namespace BookingPlatform.Infrastructure.Repositories
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private readonly BookingPlatformDbContext _dbContext;
+        internal readonly BookingPlatformDbContext _dbContext;
 
         public Repository(BookingPlatformDbContext dbContext)
         {
