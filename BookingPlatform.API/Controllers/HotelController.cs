@@ -1,5 +1,7 @@
 ﻿using BookingPlatform.Application.Features.FeaturedDeal.Queries.GetFeaturedHotels;
 using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsBySearch;
+using BookingPlatform.Application.Features.Hotel.Queries.GetRecentHotelsByUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +24,14 @@ namespace BookingPlatform.API.Controllers
                     Adults = adults,
                     Children = children
                 });
+            return response;
+        }
+
+        [Authorize]
+        [HttpGet("recent")]
+        public async Task<ActionResult<GetRecentHotelsByUserResponse>> GetRecentHotels()
+        {
+            var response = await Mediator.Send(new GetRecentHotelsByUserQuery());
             return response;
         }
     }

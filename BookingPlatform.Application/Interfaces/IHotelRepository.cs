@@ -10,5 +10,6 @@ namespace BookingPlatform.Application.Interfaces
     public interface IHotelRepository : IRepository<Hotel>
     {
         public Task<ICollection<Hotel>> GetHotelsBySearchAsync(string? hotelName, string? cityName, DateTime? checkIn, DateTime? checkOut, int? adults, int? children);
+        public Task<ICollection<(Hotel, Room)>> GetRecentHotelsByAuthUserAsync(string userId);
     }
 }

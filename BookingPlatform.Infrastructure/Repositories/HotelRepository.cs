@@ -70,5 +70,22 @@ namespace BookingPlatform.Infrastructure.Repositories
 
             return await query.ToListAsync();
         }
+
+        public async Task<ICollection<(Hotel, Room)>> GetRecentHotelsByAuthUserAsync(string userId)
+        {
+            var recentHotelRooms = await _dbContext.Bookings
+                 .Where(b => b.UserId == userId)
+                 .OrderByDescending(b => b.CheckOutDate)
+                 .Take(5)
+                 .Include(b => b.Room)
+                    .ThenInclude(r => r.Hotel)
+                        .ThenInclude(h => h.City)
+                 .Select(b => new { b.Room.Hotel, b.Room })
+                 .ToListAsync();
+
+            var result = recentHotelRooms.Select(hr => (hr.Hotel, hr.Room)).Distinct().ToList();
+
+            return result;
+        }
     }
 }
