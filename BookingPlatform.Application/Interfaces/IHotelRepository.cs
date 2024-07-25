@@ -11,5 +11,18 @@ namespace BookingPlatform.Application.Interfaces
     {
         public Task<ICollection<Hotel>> GetHotelsBySearchAsync(string? hotelName, string? cityName, DateTime? checkIn, DateTime? checkOut, int? adults, int? children);
         public Task<ICollection<(Hotel, Room)>> GetRecentHotelsByAuthUserAsync(string userId);
+
+        public Task<(ICollection<(Hotel Hotel, ICollection<decimal> pricesPerNight)> Hotels, int TotalCount, int TotalCountThisPage)> FilterHotelsAsync(
+            ICollection<int> searchedHotelIds, 
+            decimal? minPrice, 
+            decimal? maxPrice, 
+            int? minStarRating, 
+            int? maxStarRating, 
+            ICollection<string>? amenities, 
+            ICollection<string>? roomTypes,
+            int pageNumber,
+            int pageSize
+            );
+
     }
 }

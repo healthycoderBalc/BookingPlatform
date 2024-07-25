@@ -18,6 +18,14 @@ namespace BookingPlatform.Application.Profiles
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Item1.Name))
                 .ForMember(dest => dest.ThumbnailUrl, opt => opt.MapFrom(src => src.Item1.ThumbnailUrl))
                 .ForMember(dest => dest.StarRating, opt => opt.MapFrom(src => src.Item1.StarRating));
+
+            CreateMap<(Hotel Hotel, ICollection<decimal> PricesPerNight), FilterHotelDto>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Hotel.Name))
+                .ForMember(dest => dest.ThumbnailUrl, opt => opt.MapFrom(src => src.Hotel.ThumbnailUrl))
+                .ForMember(dest => dest.ShortDescription, opt => opt.MapFrom(src => src.Hotel.ShortDescription))
+                .ForMember(dest => dest.StarRating, opt => opt.MapFrom(src => src.Hotel.StarRating))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Hotel.Id))
+                .ForMember(dest => dest.PricesPerNight, opt => opt.MapFrom(src => src.PricesPerNight));
         }
     }
 }

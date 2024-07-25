@@ -14,6 +14,7 @@ namespace BookingPlatform.Infrastructure.Repositories
 
         public HotelRepository(BookingPlatformDbContext dbContext) : base(dbContext) { }
 
+
         public async Task<ICollection<Hotel>> GetHotelsBySearchAsync(string? hotelName, string? cityName, DateTime? checkIn, DateTime? checkOut, int? adults, int? children)
         {
             var query = _dbContext.Hotels
@@ -86,6 +87,75 @@ namespace BookingPlatform.Infrastructure.Repositories
             var result = recentHotelRooms.Select(hr => (hr.Hotel, hr.Room)).Distinct().ToList();
 
             return result;
+        }
+        public async Task<(ICollection<(Hotel Hotel, ICollection<decimal> pricesPerNight)>Hotels, int TotalCount, int TotalCountThisPage)> FilterHotelsAsync(
+            ICollection<int> searchedHotelIds, 
+            decimal? minPrice, 
+            decimal? maxPrice, 
+            int? minStarRating, 
+            int? maxStarRating, 
+            ICollection<string>? amenities, 
+            ICollection<string>? roomTypes,
+            int pageNumber,
+            int pageSize)
+        {
+            pageNumber = pageNumber < 1 ? 1 : pageNumber;
+            pageSize = pageSize < 1 ? 10 : pageSize;
+
+            var query = _dbContext.Hotels
+                .AsQueryable();
+            query = query
+                .Where(h => searchedHotelIds.Contains(h.Id));
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(h => h.Rooms.Any(r => r.PricePerNight >= minPrice.Value));
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(h => h.Rooms.Any(r => r.PricePerNight <= maxPrice.Value));
+            }
+
+            if (minStarRating.HasValue)
+            {
+                query = query.Where(h => h.StarRating >= minStarRating.Value);
+            }
+
+            if (maxStarRating.HasValue)
+            {
+                query = query.Where(h => h.StarRating <= maxStarRating.Value);
+            }
+
+            if (amenities != null && amenities.Count != 0)
+            {
+                query = query.Where(h => h.HotelAmenities.Any(a => amenities.Contains(a.Amenity.Name)));
+            }
+
+            if (roomTypes != null && roomTypes.Count != 0)
+            {
+                query = query.Where(h => h.Rooms.Any(r => roomTypes.Contains(r.Type.Name)));
+            }
+
+            var totalCount = await query.CountAsync();
+
+            var pagedQuery = query
+              .Skip((pageNumber - 1) * pageSize)
+              .Take(pageSize);
+
+            var resultQuery = await pagedQuery
+                  .Select(h => new
+                  {
+                      Hotel = h,
+                      PricesPerNight = h.Rooms
+                        .Select(r => r.PricePerNight)
+                        .ToList()
+                  })
+                .ToListAsync();
+            var includingPrices = resultQuery
+                .Select(x => (x.Hotel, (ICollection<decimal>)x.PricesPerNight)).ToList();
+
+            return (includingPrices, totalCount, includingPrices.Count);
         }
     }
 }
