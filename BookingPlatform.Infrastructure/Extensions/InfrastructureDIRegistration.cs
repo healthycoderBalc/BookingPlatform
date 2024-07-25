@@ -28,6 +28,7 @@ namespace BookingPlatform.Infrastructure.Extensions
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IFeaturedDealRepository, FeaturedDealRepository>();
             services.AddTransient<IHotelRepository, HotelRepository>();
+            services.AddTransient<ICityRepository, CityRepository>();
 
             services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
 

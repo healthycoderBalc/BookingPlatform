@@ -4,6 +4,7 @@ using BookingPlatform.Application.Features.City.Commands.UpdateCity;
 using BookingPlatform.Application.Features.City.Dtos;
 using BookingPlatform.Application.Features.City.Queries.GetCities;
 using BookingPlatform.Application.Features.City.Queries.GetCityById;
+using BookingPlatform.Application.Features.City.Queries.GetTrendingCities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
@@ -16,6 +17,13 @@ namespace BookingPlatform.API.Controllers
         public async Task<ActionResult<GetCitiesResponse>> GetCities()
         {
             var response = await Mediator.Send(new GetCitiesQuery());
+            return response;
+        }
+
+        [HttpGet("trending")]
+        public async Task<ActionResult<GetTrendingCitiesResponse>> GetTrendingCities()
+        {
+            var response = await Mediator.Send(new GetTrendingCitiesQuery());
             return response;
         }
 
