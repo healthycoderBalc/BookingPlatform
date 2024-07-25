@@ -23,7 +23,7 @@ namespace BookingPlatform.Infrastructure.Extensions
             var logger = services.GetRequiredService<ILogger<BookingPlatformDbContext>>();
             var bookingPlatformContext = services.GetRequiredService<BookingPlatformDbContext>();
             var userManager = services.GetRequiredService<UserManager<User>>();
-            var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var roleManager = services.GetRequiredService<RoleManager<Role>>();
 
             try
             {

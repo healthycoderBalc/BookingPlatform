@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
 using System;
+using BookingPlatform.Infrastructure.Services;
 
 
 namespace BookingPlatform.Infrastructure.Extensions
@@ -24,9 +25,13 @@ namespace BookingPlatform.Infrastructure.Extensions
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IAmenityRepository, AmenityRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IFeaturedDealRepository, FeaturedDealRepository>();
+            services.AddTransient<IHotelRepository, HotelRepository>();
 
+            services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, Role>()
             .AddEntityFrameworkStores<BookingPlatformDbContext>()
             .AddDefaultTokenProviders();
 

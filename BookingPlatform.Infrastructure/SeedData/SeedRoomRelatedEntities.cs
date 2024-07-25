@@ -30,7 +30,7 @@ namespace BookingPlatform.Infrastructure.SeedData
                 {
                     HotelId = 1,
                     RoomNumber = "102",
-                    TypeId = 1,
+                    TypeId = 2,
                     Description = "A luxury double room.",
                     PricePerNight = 250,
                     AdultCapacity = 2,

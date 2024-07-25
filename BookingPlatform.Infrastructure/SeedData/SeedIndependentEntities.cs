@@ -63,14 +63,16 @@ namespace BookingPlatform.Infrastructure.SeedData
             dbContext.SaveChanges();
         }
 
-        public static async Task<List<string>> InitializeUsers(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task<List<string>> InitializeUsers(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             var roles = new[] { "Admin", "Customer" };
             foreach (var role in roles)
             {
                 if (!await roleManager.RoleExistsAsync(role))
                 {
-                    await roleManager.CreateAsync(new IdentityRole(role));
+                    var roleEntity = new Role();
+                    roleEntity.Name = role;
+                    await roleManager.CreateAsync(roleEntity);
                 }
             }
 
@@ -86,7 +88,6 @@ namespace BookingPlatform.Infrastructure.SeedData
                     Email = "admin@example.com",
                     PhoneNumber = "1234567890",
                     DateOfBirth = new DateTime(1980, 1, 1),
-                    IsAdmin = true,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 };
@@ -109,7 +110,6 @@ namespace BookingPlatform.Infrastructure.SeedData
                     Email = "customer@example.com",
                     PhoneNumber = "0987654321",
                     DateOfBirth = new DateTime(1990, 1, 1),
-                    IsAdmin = false,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow
                 };
@@ -119,6 +119,28 @@ namespace BookingPlatform.Infrastructure.SeedData
                 {
                     await userManager.AddToRoleAsync(customerUser, "Customer");
                     usersCreated.Add(customerUser.Id);
+                }
+            }
+
+            if (await userManager.FindByEmailAsync("maria.romero@gmail.com") == null)
+            {
+                var myUser = new User
+                {
+                    FirstName = "Maria",
+                    LastName = "Romero",
+                    UserName = "maria.romero@gmail.com",
+                    Email = "maria.romero@gmail.com",
+                    PhoneNumber = "0987654321",
+                    DateOfBirth = new DateTime(1988, 12, 12),
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                };
+
+                var result = await userManager.CreateAsync(myUser, "MyUser@123");
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(myUser, "Admin");
+                    usersCreated.Add(myUser.Id);
                 }
             }
 

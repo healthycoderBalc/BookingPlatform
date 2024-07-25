@@ -11,7 +11,7 @@ namespace BookingPlatform.Infrastructure.SeedData
 {
     public static class DbInitializerSeedData
     {
-        public static async Task InitializeDatabase(BookingPlatformDbContext dbContext, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task InitializeDatabase(BookingPlatformDbContext dbContext, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
 
             SeedIndependentEntities.InitializeAmenities(dbContext);

@@ -16,12 +16,12 @@ namespace BookingPlatform.Domain.Entities
         [Required]
         public string LastName { get; set; } = string.Empty;
         public DateTime DateOfBirth { get; set; }
-
-        public bool IsAdmin { get; set; }
+        //public bool IsAdmin { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
         public bool IsDeleted { get; set; } = false;
+
 
         public ICollection<Booking> Bookings { get; set; }
         public ICollection<HotelReview> HotelReviews { get; set; }

@@ -11,7 +11,6 @@ namespace BookingPlatform.Application.Features.City.Queries.GetCities
     {
         public GetCitiesValidator()
         {
-            // FluentValidation here
         }
     }
 }

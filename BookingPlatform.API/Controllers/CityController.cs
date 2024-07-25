@@ -4,7 +4,6 @@ using BookingPlatform.Application.Features.City.Commands.UpdateCity;
 using BookingPlatform.Application.Features.City.Dtos;
 using BookingPlatform.Application.Features.City.Queries.GetCities;
 using BookingPlatform.Application.Features.City.Queries.GetCityById;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
