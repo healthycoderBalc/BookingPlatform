@@ -31,5 +31,16 @@ namespace BookingPlatform.Infrastructure.Repositories
                 .FirstOrDefaultAsync(bc => bc.Id == id);
             return bookingConfirmation;
         }
+
+        public async Task<Booking> GetByIdAsync(int id)
+        {
+            var booking = await _dbContext.Bookings
+                .Include(b => b.Room)
+                    .ThenInclude(r => r.Hotel)
+                .Include(b => b.Room)
+                    .ThenInclude(b => b.Type)
+             .FirstOrDefaultAsync(bc => bc.Id == id);
+            return booking;
+        }
     }
 }

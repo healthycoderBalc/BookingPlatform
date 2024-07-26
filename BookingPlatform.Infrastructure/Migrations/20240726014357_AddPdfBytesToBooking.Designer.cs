@@ -4,6 +4,7 @@ using BookingPlatform.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(BookingPlatformDbContext))]
-    partial class BookingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240726014357_AddPdfBytesToBooking")]
+    partial class AddPdfBytesToBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,6 +85,7 @@ namespace BookingPlatform.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<byte[]>("PdfBytes")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<int>("RoomId")

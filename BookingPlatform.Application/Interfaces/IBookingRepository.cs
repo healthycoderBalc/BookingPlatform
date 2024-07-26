@@ -11,5 +11,7 @@ namespace BookingPlatform.Application.Interfaces
     {
         public Task<Booking> AddToCartAsync(Booking booking, string userId);
         public Task<Booking> GetBookingConfirmationAsync(int id);
+
+        public new Task<Booking> GetByIdAsync(int id);
     }
 }

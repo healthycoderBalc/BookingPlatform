@@ -9,7 +9,7 @@ namespace BookingPlatform.Infrastructure.Repositories
         {
         }
 
-        public new async Task<Payment> AddAsync(Payment payment)
+        public async Task<Payment> AddAsync(Payment payment, byte[] pdfBytes)
         {
             var booking = await _dbContext.Bookings.FindAsync(payment.BookingId) ?? throw new Exception("Booking not found");
 
@@ -17,6 +17,7 @@ namespace BookingPlatform.Infrastructure.Repositories
 
             booking.IsConfirmed = true;
             booking.ConfirmationNumber = GenerateConfirmationNumber();
+            booking.PdfBytes = pdfBytes;
 
             await _dbContext.Payments.AddAsync(payment);
             await _dbContext.SaveChangesAsync();

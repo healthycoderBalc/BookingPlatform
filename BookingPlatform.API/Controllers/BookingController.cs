@@ -1,6 +1,7 @@
 ﻿using BookingPlatform.Application.Features.Booking.Commands.AddToCart;
 using BookingPlatform.Application.Features.Booking.Dtos;
 using BookingPlatform.Application.Features.Booking.Queries.GetBookingConfirmationById;
+using BookingPlatform.Application.Features.Booking.Queries.GetBookingPdf;
 using BookingPlatform.Application.Features.City.Commands.CreateCity;
 using BookingPlatform.Application.Features.City.Dtos;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,7 @@ namespace BookingPlatform.API.Controllers
     [ApiController]
     public class BookingController : ApiControllerBase
     {
+        [Authorize]
         [HttpPost("cart")]
         public async Task<ActionResult<AddToCartResponse>> Create(AddToCartBookingDto booking)
         {
@@ -26,6 +28,20 @@ namespace BookingPlatform.API.Controllers
         {
             var result = await Mediator.Send(new GetBookingConfirmationByIdQuery() { Id = id });
             return result;
+        }
+
+        [Authorize]
+        [HttpGet("download-confirmation/{id}")]
+        public async Task<ActionResult<GetBookingPdfResponse>> DownloadConfirmation(int id)
+        {
+            var result = await Mediator.Send(new GetBookingPdfQuery() { Id = id});
+         
+            if (result.Success)
+            {
+                return File(result.PdfBytes, "application/pdf", "confirmation.pdf");
+            }
+
+            return NotFound(result.Message);
         }
 
     }

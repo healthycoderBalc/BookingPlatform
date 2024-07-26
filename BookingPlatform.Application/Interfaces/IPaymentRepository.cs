@@ -4,6 +4,6 @@ namespace BookingPlatform.Application.Interfaces
 {
     public interface IPaymentRepository : IRepository<Payment>
     {
-        public new Task<Payment> AddAsync(Payment payment);
+        public Task<Payment> AddAsync(Payment payment, byte[] pdfBytes);
     }
 }

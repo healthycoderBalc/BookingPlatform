@@ -11,6 +11,9 @@ using System.Linq;
 using System.Text;
 using System;
 using BookingPlatform.Infrastructure.Services;
+using BookingPlatform.Infrastructure.Services.Dtos;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 
 namespace BookingPlatform.Infrastructure.Extensions
@@ -22,6 +25,12 @@ namespace BookingPlatform.Infrastructure.Extensions
             services.AddDbContext<BookingPlatformDbContext>(options => 
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
             o => o.EnableRetryOnFailure()));
+
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+            services.AddTransient<IEmailService, EmailService>();
+
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            services.AddScoped<IPdfService, PdfService>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddTransient<IAmenityRepository, AmenityRepository>();
