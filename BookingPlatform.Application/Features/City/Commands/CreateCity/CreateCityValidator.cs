@@ -16,10 +16,20 @@ namespace BookingPlatform.Application.Features.City.Commands.CreateCity
                 .NotNull()
                 .WithMessage("{PropertyName} should have a value");
 
+            RuleFor(c => c.CreateCity.ThumbnailUrl)
+                .NotEmpty()
+                .NotNull()
+                .WithMessage("{PropertyName} should have a value");
+
             RuleFor(c => c.CreateCity.Country)
                 .NotEmpty()
                 .NotNull()
                 .WithMessage("{PropertyName} should have a value");
+
+            RuleFor(c => c.CreateCity.PostalCode)
+              .NotEmpty()
+              .NotNull()
+              .WithMessage("{PropertyName} should have a value");
         }
     }
 }

@@ -3,8 +3,11 @@ using BookingPlatform.Application.Features.City.Commands.DeleteCity;
 using BookingPlatform.Application.Features.City.Commands.UpdateCity;
 using BookingPlatform.Application.Features.City.Dtos;
 using BookingPlatform.Application.Features.City.Queries.GetCities;
+using BookingPlatform.Application.Features.City.Queries.GetCitiesByFilter;
 using BookingPlatform.Application.Features.City.Queries.GetCityById;
 using BookingPlatform.Application.Features.City.Queries.GetTrendingCities;
+using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsBySearch;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
@@ -13,8 +16,9 @@ namespace BookingPlatform.API.Controllers
     [ApiController]
     public class CityController : ApiControllerBase
     {
+        [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<ActionResult<GetCitiesResponse>> GetCities()
+        public async Task<ActionResult<GetCitiesResponse>> GetCitiesAdmin()
         {
             var response = await Mediator.Send(new GetCitiesQuery());
             return response;
@@ -34,25 +38,36 @@ namespace BookingPlatform.API.Controllers
             return result;
         }
 
+        [Authorize (Roles ="Admin")]
         [HttpPost]
-        public async Task<ActionResult<CreateCityResponse>> Create(CityDto city)
+        public async Task<ActionResult<CreateCityResponse>> Create(CityCreationDto city)
         {
             var result = await Mediator.Send(new CreateCityCommand() { CreateCity = city });
             return result;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public async Task<ActionResult<UpdateCityResponse>> Update(int id, CityDto city)
+        public async Task<ActionResult<UpdateCityResponse>> Update(int id, CityUpdateDto city)
         {
             var result = await Mediator.Send(new UpdateCityCommand() { Id = id, UpdateCity = city });
             return result;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<DeleteCityResponse>> Delete(int id)
         {
             var result = await Mediator.Send(new DeleteCityCommand() { Id = id });
             return result;
+        }
+
+        [HttpGet("filter")]
+        public async Task<ActionResult<GetCitiesByFilterResponse>> GetCitiesByFilter(string? name, string? country, string? postalCode, int? numberOfHotels, DateTime? creationDate, DateTime? modificationDate)
+        {
+            var response = await Mediator.Send(
+                new GetCitiesByFilterQuery() { CityFilter = new CityFilterDto(name, country, postalCode, numberOfHotels, creationDate, modificationDate) });
+            return response;
         }
     }
 }

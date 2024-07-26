@@ -24,5 +24,7 @@ namespace BookingPlatform.Application.Interfaces
             int pageSize
             );
 
+
+        Task<ICollection<(Hotel Hotel, int NumberOfRooms)>> GetHotelsAdminAsync();
     }
 }

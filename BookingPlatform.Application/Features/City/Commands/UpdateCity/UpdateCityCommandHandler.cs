@@ -35,12 +35,12 @@ namespace BookingPlatform.Application.Features.City.Commands.UpdateCity
                 if (validationResult.Errors.Count > 0)
                 {
                     updateCityResponse.Success = false;
-                    updateCityResponse.ValidationErrors = new List<string>();
+                    updateCityResponse.ValidationErrors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
                     foreach (var error in validationResult.Errors.Select(x => x.ErrorMessage))
                     {
-                        updateCityResponse.ValidationErrors.Add(error);
                         _logger.LogError($"Validation failed due to error- {error}");
                     }
+                    return updateCityResponse;
                 }
                 else if (updateCityResponse.Success)
                 {

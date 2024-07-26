@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BookingPlatform.Domain.Interfaces;
 
 namespace BookingPlatform.Domain.Entities
 {
-    public class Payment
+    public class Payment : ISoftDelete
     {
         public int Id { get; set; }
 

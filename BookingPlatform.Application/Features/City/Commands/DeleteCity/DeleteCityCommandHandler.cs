@@ -35,12 +35,12 @@ namespace BookingPlatform.Application.Features.City.Commands.DeleteCity
                 if (validationResult.Errors.Count > 0)
                 {
                     deleteCityResponse.Success = false;
-                    deleteCityResponse.ValidationErrors = new List<string>();
+                    deleteCityResponse.ValidationErrors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
                     foreach (var error in validationResult.Errors.Select(x => x.ErrorMessage))
                     {
-                        deleteCityResponse.ValidationErrors.Add(error);
                         _logger.LogError($"Validation failed due to error- {error}");
                     }
+                    return deleteCityResponse;
                 }
                 else if (deleteCityResponse.Success)
                 {

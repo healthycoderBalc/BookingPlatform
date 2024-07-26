@@ -13,11 +13,11 @@ namespace BookingPlatform.Application.Features.City.Queries.GetCities
 {
     public class GetCitiesQueryHandler : IRequestHandler<GetCitiesQuery, GetCitiesResponse>
     {
-        private readonly IRepository<Domain.Entities.City> _repository;
+        private readonly ICityRepository _repository;
         private readonly IMapper _mapper;
         private readonly ILogger<GetCitiesQueryHandler> _logger;
 
-        public GetCitiesQueryHandler(IRepository<Domain.Entities.City> repository, IMapper mapper, ILogger<GetCitiesQueryHandler> logger)
+        public GetCitiesQueryHandler(ICityRepository repository, IMapper mapper, ILogger<GetCitiesQueryHandler> logger)
         {
             _repository = repository;
             _mapper = mapper;
@@ -33,17 +33,17 @@ namespace BookingPlatform.Application.Features.City.Queries.GetCities
                 if (validationResult.Errors.Count >0)
                 {
                     getCityResponse.Success = false;
-                    getCityResponse.ValidationErrors = new List<string>();
+                    getCityResponse.ValidationErrors = validationResult.Errors.Select(x => x.ErrorMessage).ToList();
                     foreach (var error in validationResult.Errors.Select(x => x.ErrorMessage))
                     {
-                        getCityResponse.ValidationErrors.Add(error);
                         _logger.LogError($"Validation failed due to error- {error}");
                     }
+                    return getCityResponse;
                 }
                 else if (getCityResponse.Success)
                 {
-                    var result = await _repository.GetAllAsync();
-                    getCityResponse.Cities = _mapper.Map<ICollection<CityDto>>(result);
+                    var result = await _repository.GetCitiesAdminAsync();
+                    getCityResponse.CitiesAdmin = _mapper.Map<ICollection<CityAdminDto>>(result);
                 }
             }
             catch (Exception ex)

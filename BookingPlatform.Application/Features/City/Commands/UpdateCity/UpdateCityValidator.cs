@@ -27,11 +27,11 @@ namespace BookingPlatform.Application.Features.City.Commands.UpdateCity
                 .WithMessage("{PropertyName} should have a value");
 
             RuleFor(c => c.Id)
-                .MustAsync(cityExist)
+                .MustAsync(CityExist)
                 .WithMessage("{PropertyName} does not exist");
         }
 
-        private async Task<bool> cityExist(int cityId, CancellationToken cancellation)
+        private async Task<bool> CityExist(int cityId, CancellationToken cancellation)
         {
             var city = await _repository.GetByIdAsync(cityId).ConfigureAwait(false);
             return city?.Id > 0;

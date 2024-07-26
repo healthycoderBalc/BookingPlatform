@@ -20,9 +20,9 @@ namespace BookingPlatform.Application.Features.City.Commands.DeleteCity
                 .GreaterThan(0)
                 .WithMessage("{PropertyName} greater than 0");
 
-            RuleFor(c => c.Id).MustAsync(cityExist).WithMessage("{PropertyName} does not exist.");
+            RuleFor(c => c.Id).MustAsync(CityExist).WithMessage("{PropertyName} does not exist.");
         }
-        private async Task<bool> cityExist(int cityId, CancellationToken cancellation)
+        private async Task<bool> CityExist(int cityId, CancellationToken cancellation)
         {
             var city = await _repository.GetByIdAsync(cityId).ConfigureAwait(false);
             return city?.Id > 0;

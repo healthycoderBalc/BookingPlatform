@@ -10,6 +10,6 @@ namespace BookingPlatform.Application.Features.City.Commands.UpdateCity
 {
     public class UpdateCityCommand : BaseCommandQuery, IRequest<UpdateCityResponse>
     {
-        public CityDto UpdateCity {  get; set; }
+        public CityUpdateDto UpdateCity {  get; set; }
     }
 }

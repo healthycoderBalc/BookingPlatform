@@ -10,6 +10,6 @@ namespace BookingPlatform.Application.Features.City.Queries.GetCities
 {
     public class GetCitiesResponse : BaseResponse
     {
-        public ICollection<CityDto> Cities { get; set; }
+        public ICollection<CityAdminDto> CitiesAdmin { get; set; }
     }
 }

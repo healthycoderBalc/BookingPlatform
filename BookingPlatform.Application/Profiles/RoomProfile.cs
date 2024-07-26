@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookingPlatform.Application.Features.City.Dtos;
 using BookingPlatform.Application.Features.Hotel.Dtos;
 using BookingPlatform.Application.Features.Room.Dtos;
 using BookingPlatform.Domain.Entities;
@@ -19,6 +20,21 @@ namespace BookingPlatform.Application.Profiles
 
             CreateMap<RoomImage, RoomImageDto>()
                 .ReverseMap();
+
+            CreateMap<Room, RoomAdminDto>()
+               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+               .ForMember(dest => dest.RoomNumber, opt => opt.MapFrom(src => src.RoomNumber))
+               .ForMember(dest => dest.Availability, opt => opt.MapFrom(src => src.IsOperational))
+               .ForMember(dest => dest.AdultCapacity, opt => opt.MapFrom(src => src.AdultCapacity))
+               .ForMember(dest => dest.ChildrenCapacity, opt => opt.MapFrom(src => src.ChildrenCapacity))
+               .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => src.CreatedAt))
+               .ForMember(dest => dest.ModificationDate, opt => opt.MapFrom(src => src.UpdatedAt));
+
+            CreateMap<Room, RoomCreationDto>()
+                .ReverseMap();
+            CreateMap<Room, RoomUpdateDto>()
+            .ReverseMap();
+
         }
     }
 }

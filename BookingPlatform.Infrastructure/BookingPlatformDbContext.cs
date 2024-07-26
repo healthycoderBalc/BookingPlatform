@@ -12,9 +12,6 @@ namespace BookingPlatform.Infrastructure
     public class BookingPlatformDbContext : IdentityDbContext<User, Role, string>
     {
         public BookingPlatformDbContext(DbContextOptions<BookingPlatformDbContext> options) : base(options) { }
-
-        //public DbSet<User> Users { get; set; }
-        //public DbSet<Role> Roles { get; set; }
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Booking> Bookings { get; set; }
@@ -32,6 +29,22 @@ namespace BookingPlatform.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Hotel>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Room>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Booking>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Payment>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<Amenity>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<HotelReview>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<HotelImage>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<HotelAmenity>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<RoomImage>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<RoomType>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<City>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<FeaturedDeal>().HasQueryFilter(x => !x.IsDeleted);
+            modelBuilder.Entity<User>().HasQueryFilter(x => !x.IsDeleted);
+
+
             modelBuilder.Entity<User>()
                 .Property(u => u.Email)
                 .IsRequired()

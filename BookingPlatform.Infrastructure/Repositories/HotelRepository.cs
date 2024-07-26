@@ -165,5 +165,24 @@ namespace BookingPlatform.Infrastructure.Repositories
                  .FirstOrDefaultAsync(h => h.Id == id);
             return hotel;
         }
+
+        public async Task<ICollection<(Hotel Hotel, int NumberOfRooms)>> GetHotelsAdminAsync()
+        {
+            var hotelsAdmin = await _dbContext.Hotels
+               .GroupJoin(
+                   _dbContext.Rooms,
+                   hotel => hotel.Id,
+                   room => room.HotelId,
+                   (hotel, rooms) => new
+                   {
+                       Hotel = hotel,
+                       NumberOfRooms = rooms.Count()
+                   })
+               .ToListAsync();
+
+            var result = hotelsAdmin.Select(x => (x.Hotel, x.NumberOfRooms)).ToList();
+
+            return result;
+        }
     }
 }

@@ -9,9 +9,7 @@
   <ItemGroup>
     <Folder Include="Features\FeaturedDeal\Commands\" />
     <Folder Include="Features\HotelImages\Commands\" />
-    <Folder Include="Features\Hotel\Commands\" />
     <Folder Include="Features\Payment\Queries\" />
-    <Folder Include="Features\Room\Commands\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
 ﻿using BookingPlatform.Application.Interfaces;
+using BookingPlatform.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,15 @@ namespace BookingPlatform.Infrastructure.Repositories
         }
         public async Task DeleteAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
+            if (entity is ISoftDelete softDeleteEntity)
+            {
+                softDeleteEntity.IsDeleted = true;
+                _dbContext.Entry(entity).State = EntityState.Modified;
+            }
+            else
+            {
+                _dbContext.Set<T>().Remove(entity);
+            }
             await _dbContext.SaveChangesAsync();
         }
     }

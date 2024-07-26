@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using BookingPlatform.Domain.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookingPlatform.Domain.Entities
 {
-    public class User : IdentityUser
+    public class User : IdentityUser, ISoftDelete
     {
         [Required]
         public string FirstName { get; set; } = string.Empty;
