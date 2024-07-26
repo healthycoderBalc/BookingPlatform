@@ -20,9 +20,15 @@ namespace BookingPlatform.Domain.Entities
         [Required]
         public DateTime CheckOutDate { get; set; }
         [Required]
+        public int NumberOfAdults { get; set; }
+        [Required]
+        public int NumberOfChildren { get; set; }
+
+        [Required]
         public decimal TotalPrice { get; set; }
         public string SpecialRequests { get; set; }
-        public string ConfirmationNumber { get; set; }
+        public string ConfirmationNumber { get; set; } = string.Empty;
+        public bool IsConfirmed { get; set; } = false;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

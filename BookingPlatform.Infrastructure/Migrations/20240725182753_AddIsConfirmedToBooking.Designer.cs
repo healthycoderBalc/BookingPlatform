@@ -4,6 +4,7 @@ using BookingPlatform.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookingPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(BookingPlatformDbContext))]
-    partial class BookingPlatformDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240725182753_AddIsConfirmedToBooking")]
+    partial class AddIsConfirmedToBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,7 +48,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Amenities", (string)null);
+                    b.ToTable("Amenities");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.Booking", b =>
@@ -69,17 +72,8 @@ namespace BookingPlatform.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("NumberOfAdults")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumberOfChildren")
-                        .HasColumnType("int");
 
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -98,13 +92,16 @@ namespace BookingPlatform.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<bool>("isConfirmed")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RoomId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Bookings", (string)null);
+                    b.ToTable("Bookings");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.City", b =>
@@ -142,7 +139,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.FeaturedDeal", b =>
@@ -175,7 +172,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("FeaturedDeals", (string)null);
+                    b.ToTable("FeaturedDeals");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.Hotel", b =>
@@ -235,7 +232,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("Hotels", (string)null);
+                    b.ToTable("Hotels");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.HotelAmenity", b =>
@@ -267,7 +264,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("HotelAmenities", (string)null);
+                    b.ToTable("HotelAmenities");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.HotelImage", b =>
@@ -298,7 +295,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("HotelId");
 
-                    b.ToTable("HotelImages", (string)null);
+                    b.ToTable("HotelImages");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.HotelReview", b =>
@@ -336,7 +333,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("HotelReviews", (string)null);
+                    b.ToTable("HotelReviews");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.Payment", b =>
@@ -377,7 +374,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("BookingId");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.Role", b =>
@@ -456,7 +453,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.RoomImage", b =>
@@ -487,7 +484,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("RoomImages", (string)null);
+                    b.ToTable("RoomImages");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.RoomType", b =>
@@ -513,7 +510,7 @@ namespace BookingPlatform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoomTypes", (string)null);
+                    b.ToTable("RoomTypes");
                 });
 
             modelBuilder.Entity("BookingPlatform.Domain.Entities.User", b =>

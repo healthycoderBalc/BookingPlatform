@@ -29,6 +29,10 @@ namespace BookingPlatform.Infrastructure.Extensions
             services.AddTransient<IFeaturedDealRepository, FeaturedDealRepository>();
             services.AddTransient<IHotelRepository, HotelRepository>();
             services.AddTransient<ICityRepository, CityRepository>();
+            services.AddTransient<IHotelImageRepository, HotelImageRepository>();
+            services.AddTransient<IRoomRepository, RoomRepository>();
+            services.AddTransient<IBookingRepository, BookingRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
 
             services.AddTransient<IJwtTokenGenerator, JwtTokenGenerator>();
 

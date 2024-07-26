@@ -157,5 +157,13 @@ namespace BookingPlatform.Infrastructure.Repositories
 
             return (includingPrices, totalCount, includingPrices.Count);
         }
+
+        public new async Task<Hotel> GetByIdAsync(int id)
+        {
+            var hotel = await _dbContext.Hotels
+                 .Include(h => h.HotelReviews)
+                 .FirstOrDefaultAsync(h => h.Id == id);
+            return hotel;
+        }
     }
 }

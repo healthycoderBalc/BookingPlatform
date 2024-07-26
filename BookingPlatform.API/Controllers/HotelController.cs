@@ -1,10 +1,8 @@
-﻿using BookingPlatform.Application.Features.FeaturedDeal.Queries.GetFeaturedHotels;
-using BookingPlatform.Application.Features.Hotel.Queries.FilterHotelsSearch;
+﻿using BookingPlatform.Application.Features.Hotel.Queries.FilterHotelsSearch;
+using BookingPlatform.Application.Features.Hotel.Queries.GetHotelById;
 using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsBySearch;
 using BookingPlatform.Application.Features.Hotel.Queries.GetRecentHotelsByUser;
-using BookingPlatform.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
@@ -43,6 +41,13 @@ namespace BookingPlatform.API.Controllers
         {
             var response = await Mediator.Send(filterHotelsSearchQuery);
             return response;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetHotelByIdResponse>> GetById(int id)
+        {
+            var result = await Mediator.Send(new GetHotelByIdQuery() { Id = id });
+            return result;
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace BookingPlatform.Application.Features.Amenity.Queries.GetAmenitiesByName
 {
-    public class GetAmenitiesByNameQueryHandler : IRequestHandler<GetAmenitiesByNameQuery, GetAmenitiesByNameResponse>
+    public class GetAmenitiesByNameQueryHandler : IRequestHandler<GetHotelImagesByhotelIdQuery, GetAmenitiesByNameResponse>
     {
         private readonly IAmenityRepository _repository;
         private readonly IMapper _mapper;
@@ -18,7 +18,7 @@ namespace BookingPlatform.Application.Features.Amenity.Queries.GetAmenitiesByNam
             _mapper = mapper;
             _logger = logger;
         }
-        public async Task<GetAmenitiesByNameResponse> Handle(GetAmenitiesByNameQuery request, CancellationToken cancellationToken)
+        public async Task<GetAmenitiesByNameResponse> Handle(GetHotelImagesByhotelIdQuery request, CancellationToken cancellationToken)
         {
             var amenityResponse = new GetAmenitiesByNameResponse();
             var validator = new GetAmenitiesByNameValidator();

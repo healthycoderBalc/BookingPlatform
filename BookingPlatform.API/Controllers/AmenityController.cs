@@ -14,7 +14,7 @@ namespace BookingPlatform.API.Controllers
         [HttpGet("{name}")]
         public async Task<ActionResult<GetAmenitiesByNameResponse>> GetByName(string name)
         {
-            var result = await Mediator.Send(new GetAmenitiesByNameQuery()  { Name = name });
+            var result = await Mediator.Send(new GetHotelImagesByhotelIdQuery()  { Name = name });
             return result;
         }
 

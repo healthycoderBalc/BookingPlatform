@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookingPlatform.Application.Features.Amenity.Queries.GetAmenitiesByName
 {
-    public class GetAmenitiesByNameQuery : IRequest<GetAmenitiesByNameResponse>
+    public class GetHotelImagesByhotelIdQuery : IRequest<GetAmenitiesByNameResponse>
     {
         public string Name { get; set; }
     }

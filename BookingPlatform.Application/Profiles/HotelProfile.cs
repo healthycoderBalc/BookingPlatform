@@ -26,6 +26,12 @@ namespace BookingPlatform.Application.Profiles
                 .ForMember(dest => dest.StarRating, opt => opt.MapFrom(src => src.Hotel.StarRating))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Hotel.Id))
                 .ForMember(dest => dest.PricesPerNight, opt => opt.MapFrom(src => src.PricesPerNight));
+
+            CreateMap<Hotel, DetailedHotelDto>()
+              .ReverseMap();
+
+            CreateMap<HotelReview, HotelReviewDto>()
+                .ReverseMap();
         }
     }
 }

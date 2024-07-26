@@ -15,7 +15,7 @@ namespace BookingPlatform.Domain.Entities
         public int BookingId { get; set; }
 
         [Required]
-        public DateTime PaymentDate { get; set; }
+        public DateTime PaymentDate { get; set; } = DateTime.Now;
 
         [Required]
         public decimal Amount { get; set; }

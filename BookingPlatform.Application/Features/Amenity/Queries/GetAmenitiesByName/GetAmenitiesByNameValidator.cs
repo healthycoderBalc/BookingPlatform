@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookingPlatform.Application.Features.Amenity.Queries.GetAmenitiesByName
 {
-    public class GetAmenitiesByNameValidator : AbstractValidator<GetAmenitiesByNameQuery>
+    public class GetAmenitiesByNameValidator : AbstractValidator<GetHotelImagesByhotelIdQuery>
     {
         public GetAmenitiesByNameValidator()
         {
