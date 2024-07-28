@@ -26,5 +26,8 @@ namespace BookingPlatform.Application.Interfaces
 
 
         Task<ICollection<(Hotel Hotel, int NumberOfRooms)>> GetHotelsAdminAsync();
+
+        public Task<ICollection<(Hotel Hotel, int NumberOfRooms)>> GetHotelsByFilterAdminAsync(string? name, int? starRating, string? ownerName, int? numberOfRooms, DateTime? creationDate, DateTime? modificationDate);
+
     }
 }

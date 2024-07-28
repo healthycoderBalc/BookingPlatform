@@ -62,6 +62,7 @@ namespace BookingPlatform.API.Controllers
             return result;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet("filter")]
         public async Task<ActionResult<GetCitiesByFilterResponse>> GetCitiesByFilter(string? name, string? country, string? postalCode, int? numberOfHotels, DateTime? creationDate, DateTime? modificationDate)
         {

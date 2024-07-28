@@ -3,6 +3,7 @@ using BookingPlatform.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -181,6 +182,57 @@ namespace BookingPlatform.Infrastructure.Repositories
                .ToListAsync();
 
             var result = hotelsAdmin.Select(x => (x.Hotel, x.NumberOfRooms)).ToList();
+
+            return result;
+        }
+
+        public async Task<ICollection<(Hotel Hotel, int NumberOfRooms)>> GetHotelsByFilterAdminAsync(string? name, int? starRating, string? ownerName, int? numberOfRooms, DateTime? creationDate, DateTime? modificationDate)
+        {
+            var query = _dbContext.Hotels
+                .GroupJoin(
+                    _dbContext.Rooms,
+                    hotel => hotel.Id,
+                    room => room.HotelId,
+                    (hotel, rooms) => new
+                    {
+                        Hotel = hotel,
+                        NumberOfRooms = rooms.Count()
+                    })
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                query = query.Where(h => h.Hotel.Name.Contains(name));
+            }
+
+            if (starRating.HasValue)
+            {
+                query = query.Where(h => h.Hotel.StarRating == starRating.Value);
+            }
+
+
+            if (!string.IsNullOrEmpty(ownerName))
+            {
+                query = query.Where(h => h.Hotel.OwnerName.Contains(ownerName));
+            }
+
+            if (numberOfRooms.HasValue)
+            {
+                query = query.Where(h => h.NumberOfRooms == numberOfRooms.Value);
+            }
+
+            if (creationDate.HasValue)
+            {
+                query = query.Where(h => h.Hotel.CreatedAt.Date == creationDate.Value.Date);
+            }
+
+            if (modificationDate.HasValue)
+            {
+                query = query.Where(h => h.Hotel.UpdatedAt.Date == modificationDate.Value.Date);
+            }
+
+            var resultList = await query.ToListAsync();
+            var result = resultList.Select(x => (x.Hotel, x.NumberOfRooms)).ToList();
 
             return result;
         }

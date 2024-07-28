@@ -1,6 +1,7 @@
 ﻿using BookingPlatform.Application.Features.City.Commands.CreateCity;
 using BookingPlatform.Application.Features.City.Commands.UpdateCity;
 using BookingPlatform.Application.Features.City.Dtos;
+using BookingPlatform.Application.Features.City.Queries.GetCitiesByFilter;
 using BookingPlatform.Application.Features.Hotel.Commands.CreateHotel;
 using BookingPlatform.Application.Features.Hotel.Commands.DeleteHotel;
 using BookingPlatform.Application.Features.Hotel.Commands.UpdateHotel;
@@ -8,6 +9,7 @@ using BookingPlatform.Application.Features.Hotel.Dtos;
 using BookingPlatform.Application.Features.Hotel.Queries.FilterHotelsSearch;
 using BookingPlatform.Application.Features.Hotel.Queries.GetHotelById;
 using BookingPlatform.Application.Features.Hotel.Queries.GetHotels;
+using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsByFilterAdmin;
 using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsBySearch;
 using BookingPlatform.Application.Features.Hotel.Queries.GetRecentHotelsByUser;
 using Microsoft.AspNetCore.Authorization;
@@ -89,6 +91,16 @@ namespace BookingPlatform.API.Controllers
         {
             var result = await Mediator.Send(new UpdateHotelCommand() { Id = id, UpdateHotel = city });
             return result;
+        }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin-filter")]
+        public async Task<ActionResult<GetHotelsByFilterAdminResponse>> GetHotelsByFilterAdmin(string? name, int? starRating, string? ownerName, int? numberOfRooms, DateTime? creationDate, DateTime? modificationDate)
+        {
+            var response = await Mediator.Send(
+                new GetHotelsByFilterAdminQuery() { HotelFilter = new HotelFilterDto(name, starRating, ownerName, numberOfRooms, creationDate, modificationDate) });
+            return response;
         }
     }
 }

@@ -60,6 +60,7 @@ namespace BookingPlatform.Application.Features.Hotel.Commands.CreateHotel
             RuleFor(h => h.CreateHotel.CityId)
               .MustAsync(CityExist)
               .WithMessage("{PropertyName} does not exist");
+
         }
 
         private async Task<bool> CityExist(int cityId, CancellationToken cancellation)

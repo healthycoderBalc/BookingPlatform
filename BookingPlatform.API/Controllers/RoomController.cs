@@ -1,8 +1,11 @@
-﻿using BookingPlatform.Application.Features.Room.Commands.CreateRoom;
+﻿using BookingPlatform.Application.Features.Hotel.Dtos;
+using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsByFilterAdmin;
+using BookingPlatform.Application.Features.Room.Commands.CreateRoom;
 using BookingPlatform.Application.Features.Room.Commands.DeleteRoom;
 using BookingPlatform.Application.Features.Room.Commands.UpdateRoom;
 using BookingPlatform.Application.Features.Room.Dtos;
 using BookingPlatform.Application.Features.Room.Queries.GetRooms;
+using BookingPlatform.Application.Features.Room.Queries.GetRoomsByFilterAdmin;
 using BookingPlatform.Application.Features.Room.Queries.GetRoomsByHotelId;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -51,5 +54,19 @@ namespace BookingPlatform.API.Controllers
             var result = await Mediator.Send(new UpdateRoomCommand() { Id = id, RoomUpdate = city });
             return result;
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin-filter")]
+        public async Task<ActionResult<GetRoomsByFilterAdminResponse>> GetRoomsByFilterAdmin(string? roomNumber, bool? availability, int? adultCapacity, int? childrenCapacity, DateTime? creationDate, DateTime? modificationDate)
+        {
+            var response = await Mediator.Send(
+                new GetRoomsByFilterAdminQuery() { RoomFilter = new RoomFilterDto(roomNumber, availability, adultCapacity, childrenCapacity, creationDate, modificationDate) });
+            return response;
+        }
+
+
+
+
+
     }
 }
