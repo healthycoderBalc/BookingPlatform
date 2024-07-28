@@ -12,10 +12,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/cities")]
     [ApiController]
     public class CityController : ApiControllerBase
     {
+        [HttpGet("trending")]
+        public async Task<ActionResult<GetTrendingCitiesResponse>> GetTrendingCities()
+        {
+            var response = await Mediator.Send(new GetTrendingCitiesQuery());
+            return response;
+        }
+
         [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<ActionResult<GetCitiesResponse>> GetCitiesAdmin()
@@ -24,18 +31,13 @@ namespace BookingPlatform.API.Controllers
             return response;
         }
 
-        [HttpGet("trending")]
-        public async Task<ActionResult<GetTrendingCitiesResponse>> GetTrendingCities()
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin-filter")]
+        public async Task<ActionResult<GetCitiesByFilterResponse>> GetCitiesByFilter(string? name, string? country, string? postalCode, int? numberOfHotels, DateTime? creationDate, DateTime? modificationDate)
         {
-            var response = await Mediator.Send(new GetTrendingCitiesQuery());
+            var response = await Mediator.Send(
+                new GetCitiesByFilterQuery() { CityFilter = new CityFilterDto(name, country, postalCode, numberOfHotels, creationDate, modificationDate) });
             return response;
-        }
-
-        [HttpGet("{id}")]
-        public async Task<ActionResult<GetCityByIdResponse>> GetById(int id)
-        {
-            var result = await Mediator.Send(new GetCityByIdQuery() { Id = id });
-            return result;
         }
 
         [Authorize (Roles ="Admin")]
@@ -62,13 +64,11 @@ namespace BookingPlatform.API.Controllers
             return result;
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpGet("filter")]
-        public async Task<ActionResult<GetCitiesByFilterResponse>> GetCitiesByFilter(string? name, string? country, string? postalCode, int? numberOfHotels, DateTime? creationDate, DateTime? modificationDate)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetCityByIdResponse>> GetById(int id)
         {
-            var response = await Mediator.Send(
-                new GetCitiesByFilterQuery() { CityFilter = new CityFilterDto(name, country, postalCode, numberOfHotels, creationDate, modificationDate) });
-            return response;
+            var result = await Mediator.Send(new GetCityByIdQuery() { Id = id });
+            return result;
         }
     }
 }

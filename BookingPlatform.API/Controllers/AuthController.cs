@@ -1,13 +1,11 @@
 ﻿using BookingPlatform.Application.Features.User.Commands.LoginUser;
 using BookingPlatform.Application.Features.User.Commands.RegisterUser;
 using BookingPlatform.Application.Features.User.Dtos;
-using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/auth")]
     [ApiController]
     public class AuthController : ApiControllerBase
     {

@@ -78,9 +78,6 @@ namespace BookingPlatform.Application.Features.Payment.Commands.CreatePayment
                                        "Thank you for booking with us.\n\nBest regards,\n\nBooking Platform";
 
                     await _emailService.SendEmailAsync(userEmail, emailSubject, emailMessage);
-
-
-
                 }
             }
             catch (Exception ex)

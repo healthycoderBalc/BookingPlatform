@@ -3,13 +3,11 @@ using BookingPlatform.Application.Features.Role.Commands.CreateRole;
 using BookingPlatform.Application.Features.Role.Dtos;
 using BookingPlatform.Application.Features.Role.Queries.GetRoles;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/roles")]
     [ApiController]
     public class RoleController : ApiControllerBase
     {
@@ -25,11 +23,6 @@ namespace BookingPlatform.API.Controllers
         [HttpPost]
         public async Task<ActionResult<CreateRoleResponse>> Create(RoleDto role)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var roles = User.FindAll(ClaimTypes.Role).Select(r => r.Value).ToList();
-
-            Console.WriteLine($"User ID: {userId}, Roles: {string.Join(", ", roles)}");
-
             var result = await Mediator.Send(new CreateRoleCommand() { CreateRole = role });
             return result;
         }

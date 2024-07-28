@@ -2,15 +2,17 @@
 using BookingPlatform.Application.Features.Booking.Dtos;
 using BookingPlatform.Application.Features.Payment.Commands.CreatePayment;
 using BookingPlatform.Application.Features.Payment.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/payments")]
     [ApiController]
     public class PaymentController : ApiControllerBase
     {
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CreatePaymentResponse>> Create(CreatePaymentDto payment)
         {

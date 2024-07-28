@@ -1,16 +1,8 @@
 ﻿using AutoMapper;
-using BookingPlatform.Application.Features.Amenity.Dtos;
-using BookingPlatform.Application.Features.Amenity.Queries.GetAmenitiesByName;
-using BookingPlatform.Application.Features.City.Queries.GetCityById;
 using BookingPlatform.Application.Features.Hotel.Dtos;
 using BookingPlatform.Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookingPlatform.Application.Features.Hotel.Queries.GetHotelsBySearch
 {

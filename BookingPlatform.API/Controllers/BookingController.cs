@@ -10,12 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/bookings")]
     [ApiController]
     public class BookingController : ApiControllerBase
     {
         [Authorize]
-        [HttpPost("cart")]
+        [HttpPost("add-to-cart")]
         public async Task<ActionResult<AddToCartResponse>> Create(AddToCartBookingDto booking)
         {
             var result = await Mediator.Send(new AddToCartCommand() { AddToCartBooking = booking });
@@ -23,7 +23,7 @@ namespace BookingPlatform.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("/confirmation/{id}")]
+        [HttpGet("{id}/confirmation/")]
         public async Task<ActionResult<GetBookingConfirmationByIdResponse>> GetConfirmationById(int id)
         {
             var result = await Mediator.Send(new GetBookingConfirmationByIdQuery() { Id = id });
@@ -31,7 +31,7 @@ namespace BookingPlatform.API.Controllers
         }
 
         [Authorize]
-        [HttpGet("download-confirmation/{id}")]
+        [HttpGet("{id}/confirmation/download/")]
         public async Task<ActionResult<GetBookingPdfResponse>> DownloadConfirmation(int id)
         {
             var result = await Mediator.Send(new GetBookingPdfQuery() { Id = id});
@@ -43,6 +43,5 @@ namespace BookingPlatform.API.Controllers
 
             return NotFound(result.Message);
         }
-
     }
 }

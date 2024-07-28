@@ -1,8 +1,4 @@
-﻿using BookingPlatform.Application.Features.City.Commands.CreateCity;
-using BookingPlatform.Application.Features.City.Commands.UpdateCity;
-using BookingPlatform.Application.Features.City.Dtos;
-using BookingPlatform.Application.Features.City.Queries.GetCitiesByFilter;
-using BookingPlatform.Application.Features.Hotel.Commands.CreateHotel;
+﻿using BookingPlatform.Application.Features.Hotel.Commands.CreateHotel;
 using BookingPlatform.Application.Features.Hotel.Commands.DeleteHotel;
 using BookingPlatform.Application.Features.Hotel.Commands.UpdateHotel;
 using BookingPlatform.Application.Features.Hotel.Dtos;
@@ -12,24 +8,16 @@ using BookingPlatform.Application.Features.Hotel.Queries.GetHotels;
 using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsByFilterAdmin;
 using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsBySearch;
 using BookingPlatform.Application.Features.Hotel.Queries.GetRecentHotelsByUser;
+using BookingPlatform.Application.Features.Room.Queries.GetRoomsByHotelId;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/hotels")]
     [ApiController]
     public class HotelController : ApiControllerBase
     {
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public async Task<ActionResult<GetHotelsResponse>> GetHotelsAdmin()
-        {
-            var response = await Mediator.Send(new GetHotelsQuery());
-            return response;
-        }
-
-
         [HttpGet("search")]
         public async Task<ActionResult<GetHotelsBySearchResponse>> GetHotelsBySearch(string? hotelName, [FromQuery] string? cityName, DateTime? checkIn, DateTime? checkOut, int? adults, int? children)
         {
@@ -69,12 +57,28 @@ namespace BookingPlatform.API.Controllers
             return result;
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<DeleteHotelResponse>> Delete(int id)
+        [HttpGet("{hotelId}/rooms")]
+        public async Task<ActionResult<GetRoomsByHotelIdResponse>> GetByHotelId(int hotelId)
         {
-            var result = await Mediator.Send(new DeleteHotelCommand() { Id = id });
+            var result = await Mediator.Send(new GetRoomsByHotelIdQuery() { HotelId = hotelId });
             return result;
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<ActionResult<GetHotelsResponse>> GetHotelsAdmin()
+        {
+            var response = await Mediator.Send(new GetHotelsQuery());
+            return response;
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet("admin-filter")]
+        public async Task<ActionResult<GetHotelsByFilterAdminResponse>> GetHotelsByFilterAdmin(string? name, int? starRating, string? ownerName, int? numberOfRooms, DateTime? creationDate, DateTime? modificationDate)
+        {
+            var response = await Mediator.Send(
+                new GetHotelsByFilterAdminQuery() { HotelFilter = new HotelFilterDto(name, starRating, ownerName, numberOfRooms, creationDate, modificationDate) });
+            return response;
         }
 
         [Authorize(Roles = "Admin")]
@@ -93,14 +97,13 @@ namespace BookingPlatform.API.Controllers
             return result;
         }
 
-
         [Authorize(Roles = "Admin")]
-        [HttpGet("admin-filter")]
-        public async Task<ActionResult<GetHotelsByFilterAdminResponse>> GetHotelsByFilterAdmin(string? name, int? starRating, string? ownerName, int? numberOfRooms, DateTime? creationDate, DateTime? modificationDate)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<DeleteHotelResponse>> Delete(int id)
         {
-            var response = await Mediator.Send(
-                new GetHotelsByFilterAdminQuery() { HotelFilter = new HotelFilterDto(name, starRating, ownerName, numberOfRooms, creationDate, modificationDate) });
-            return response;
+            var result = await Mediator.Send(new DeleteHotelCommand() { Id = id });
+            return result;
         }
+
     }
 }

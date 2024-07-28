@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/hotels")]
     [ApiController]
     public class HotelImageController : ApiControllerBase
     {
-        [HttpGet("{hotelId}")]
+        [HttpGet("{hotelId}/images")]
         public async Task<ActionResult<GetHotelImagesByHotelIdResponse>> GetByHotelId(int hotelId)
         {
             var result = await Mediator.Send(new GetHotelImagesByHotelIdQuery() { HotelId = hotelId});

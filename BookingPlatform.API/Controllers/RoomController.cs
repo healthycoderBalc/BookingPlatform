@@ -1,18 +1,15 @@
-﻿using BookingPlatform.Application.Features.Hotel.Dtos;
-using BookingPlatform.Application.Features.Hotel.Queries.GetHotelsByFilterAdmin;
-using BookingPlatform.Application.Features.Room.Commands.CreateRoom;
+﻿using BookingPlatform.Application.Features.Room.Commands.CreateRoom;
 using BookingPlatform.Application.Features.Room.Commands.DeleteRoom;
 using BookingPlatform.Application.Features.Room.Commands.UpdateRoom;
 using BookingPlatform.Application.Features.Room.Dtos;
 using BookingPlatform.Application.Features.Room.Queries.GetRooms;
 using BookingPlatform.Application.Features.Room.Queries.GetRoomsByFilterAdmin;
-using BookingPlatform.Application.Features.Room.Queries.GetRoomsByHotelId;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/rooms")]
     [ApiController]
     public class RoomController : ApiControllerBase
     {
@@ -24,19 +21,13 @@ namespace BookingPlatform.API.Controllers
             return response;
         }
 
-        [HttpGet("{hotelId}")]
-        public async Task<ActionResult<GetRoomsByHotelIdResponse>> GetByHotelId(int hotelId)
-        {
-            var result = await Mediator.Send(new GetRoomsByHotelIdQuery() { HotelId = hotelId });
-            return result;
-        }
-
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<DeleteRoomResponse>> Delete(int id)
+        [HttpGet("admin-filter")]
+        public async Task<ActionResult<GetRoomsByFilterAdminResponse>> GetRoomsByFilterAdmin(string? roomNumber, bool? availability, int? adultCapacity, int? childrenCapacity, DateTime? creationDate, DateTime? modificationDate)
         {
-            var result = await Mediator.Send(new DeleteRoomCommand() { Id = id });
-            return result;
+            var response = await Mediator.Send(
+                new GetRoomsByFilterAdminQuery() { RoomFilter = new RoomFilterDto(roomNumber, availability, adultCapacity, childrenCapacity, creationDate, modificationDate) });
+            return response;
         }
 
         [Authorize(Roles = "Admin")]
@@ -56,17 +47,11 @@ namespace BookingPlatform.API.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpGet("admin-filter")]
-        public async Task<ActionResult<GetRoomsByFilterAdminResponse>> GetRoomsByFilterAdmin(string? roomNumber, bool? availability, int? adultCapacity, int? childrenCapacity, DateTime? creationDate, DateTime? modificationDate)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<DeleteRoomResponse>> Delete(int id)
         {
-            var response = await Mediator.Send(
-                new GetRoomsByFilterAdminQuery() { RoomFilter = new RoomFilterDto(roomNumber, availability, adultCapacity, childrenCapacity, creationDate, modificationDate) });
-            return response;
+            var result = await Mediator.Send(new DeleteRoomCommand() { Id = id });
+            return result;
         }
-
-
-
-
-
     }
 }

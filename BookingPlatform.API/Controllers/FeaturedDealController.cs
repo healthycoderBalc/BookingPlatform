@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookingPlatform.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/hotels/featured-deals")]
     [ApiController]
     public class FeaturedDealController : ApiControllerBase
     {

@@ -1,12 +1,5 @@
 ﻿using AutoMapper;
-using BookingPlatform.Application.Features.Amenity.Dtos;
 using BookingPlatform.Application.Features.Booking.Dtos;
-using BookingPlatform.Application.Features.FeaturedDeal.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookingPlatform.Application.Profiles
 {

@@ -1,19 +1,14 @@
-﻿using BookingPlatform.Infrastructure.Repositories;
-using Microsoft.Extensions.DependencyInjection;
-using BookingPlatform.Application.Interfaces;
-using Microsoft.Extensions.Configuration;
+﻿using BookingPlatform.Application.Interfaces;
 using BookingPlatform.Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Text;
-using System;
+using BookingPlatform.Infrastructure.Repositories;
 using BookingPlatform.Infrastructure.Services;
 using BookingPlatform.Infrastructure.Services.Dtos;
-using DinkToPdf.Contracts;
 using DinkToPdf;
+using DinkToPdf.Contracts;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 
 namespace BookingPlatform.Infrastructure.Extensions
@@ -33,7 +28,6 @@ namespace BookingPlatform.Infrastructure.Extensions
             services.AddScoped<IPdfService, PdfService>();
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddTransient<IAmenityRepository, AmenityRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IFeaturedDealRepository, FeaturedDealRepository>();
             services.AddTransient<IHotelRepository, HotelRepository>();

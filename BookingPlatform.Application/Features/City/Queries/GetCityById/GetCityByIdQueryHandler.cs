@@ -44,7 +44,7 @@ namespace BookingPlatform.Application.Features.City.Queries.GetCityById
                 else if (cityResponse.Success)
                 {
                     var result = await _repository.GetByIdAsync(request.Id);
-                    cityResponse.City = _mapper.Map<CityDto>(result);
+                    cityResponse.City = _mapper.Map<CityAdminDto>(result);
                 }
             }
             catch (Exception ex)
