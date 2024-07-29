@@ -1,13 +1,4 @@
-﻿using BookingPlatform.Application.Features.Entity;
-using BookingPlatform.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookingPlatform.Application.Features.Booking.Dtos
+﻿namespace BookingPlatform.Application.Features.Booking.Dtos
 {
     public class AddToCartBookingDto
     {

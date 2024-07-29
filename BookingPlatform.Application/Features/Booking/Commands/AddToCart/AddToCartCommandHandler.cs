@@ -10,13 +10,15 @@ namespace BookingPlatform.Application.Features.Booking.Commands.AddToCart
     public class AddToCartCommandHandler : IRequestHandler<AddToCartCommand, AddToCartResponse>
     {
         private readonly IBookingRepository _repository;
+        private readonly IRoomRepository _roomRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AddToCartCommandHandler(IBookingRepository repository, IMapper mapper, ILogger<AddToCartCommandHandler> logger, IHttpContextAccessor httpContextAccessor)
+        public AddToCartCommandHandler(IBookingRepository repository, IRoomRepository roomRepository, IMapper mapper, ILogger<AddToCartCommandHandler> logger, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
+            _roomRepository = roomRepository;
             _mapper = mapper;
             _logger = logger;
             _httpContextAccessor = httpContextAccessor;
@@ -24,7 +26,7 @@ namespace BookingPlatform.Application.Features.Booking.Commands.AddToCart
         public async Task<AddToCartResponse> Handle(AddToCartCommand request, CancellationToken cancellationToken)
         {
             var addToCartResponse = new AddToCartResponse();
-            var validator = new AddToCartValidator();
+            var validator = new AddToCartValidator(_roomRepository);
 
             try
             {

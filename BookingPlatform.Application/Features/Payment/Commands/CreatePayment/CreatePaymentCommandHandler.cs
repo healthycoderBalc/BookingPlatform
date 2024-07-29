@@ -32,7 +32,7 @@ namespace BookingPlatform.Application.Features.Payment.Commands.CreatePayment
         public async Task<CreatePaymentResponse> Handle(CreatePaymentCommand request, CancellationToken cancellationToken)
         {
             var paymentResponse = new CreatePaymentResponse();
-            var validator = new CreatePaymentValidator();
+            var validator = new CreatePaymentValidator(_bookingRepository);
 
             try
             {

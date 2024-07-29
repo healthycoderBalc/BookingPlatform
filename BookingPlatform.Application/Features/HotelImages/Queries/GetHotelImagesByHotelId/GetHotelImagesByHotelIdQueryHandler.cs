@@ -18,12 +18,14 @@ namespace BookingPlatform.Application.Features.HotelImages.Queries.GetHotelImage
     public class GetHotelImagesByHotelIdQueryHandler : IRequestHandler<GetHotelImagesByHotelIdQuery, GetHotelImagesByHotelIdResponse>
     {
         private readonly IHotelImageRepository _repository;
+        private readonly IRepository<Domain.Entities.Hotel> _hotelRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public GetHotelImagesByHotelIdQueryHandler(IHotelImageRepository repository, IMapper mapper, ILogger<GetHotelImagesByHotelIdQueryHandler> logger)
+        public GetHotelImagesByHotelIdQueryHandler(IHotelImageRepository repository, IRepository<Domain.Entities.Hotel> hotelRepository, IMapper mapper, ILogger<GetHotelImagesByHotelIdQueryHandler> logger)
         {
             _repository = repository;
+            _hotelRepository = hotelRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -32,7 +34,7 @@ namespace BookingPlatform.Application.Features.HotelImages.Queries.GetHotelImage
         public async Task<GetHotelImagesByHotelIdResponse> Handle(GetHotelImagesByHotelIdQuery request, CancellationToken cancellationToken)
         {
             var hotelImagesResponse = new GetHotelImagesByHotelIdResponse();
-            var validator = new GetHotelImagesByHotelIdValidator();
+            var validator = new GetHotelImagesByHotelIdValidator(_hotelRepository);
             try
             {
                 var validationResult = await validator.ValidateAsync(request, cancellationToken);

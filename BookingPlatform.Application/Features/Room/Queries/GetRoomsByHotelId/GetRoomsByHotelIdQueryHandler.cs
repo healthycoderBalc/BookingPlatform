@@ -9,19 +9,21 @@ namespace BookingPlatform.Application.Features.Room.Queries.GetRoomsByHotelId
     public class GetRoomsByHotelIdQueryHandler : IRequestHandler<GetRoomsByHotelIdQuery, GetRoomsByHotelIdResponse>
     {
         private readonly IRoomRepository _repository;
+        private readonly IHotelRepository _hotelRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public GetRoomsByHotelIdQueryHandler(IRoomRepository repository, IMapper mapper, ILogger<GetRoomsByHotelIdQueryHandler> logger)
+        public GetRoomsByHotelIdQueryHandler(IRoomRepository repository, IHotelRepository hotelRepository, IMapper mapper, ILogger<GetRoomsByHotelIdQueryHandler> logger)
         {
             _repository = repository;
+            _hotelRepository = hotelRepository;
             _mapper = mapper;
             _logger = logger;
         }
         public async Task<GetRoomsByHotelIdResponse> Handle(GetRoomsByHotelIdQuery request, CancellationToken cancellationToken)
         {
             var hotelImagesResponse = new GetRoomsByHotelIdResponse();
-            var validator = new GetRoomsByHotelIdValidator();
+            var validator = new GetRoomsByHotelIdValidator(_hotelRepository);
             try
             {
                 var validationResult = await validator.ValidateAsync(request, cancellationToken);

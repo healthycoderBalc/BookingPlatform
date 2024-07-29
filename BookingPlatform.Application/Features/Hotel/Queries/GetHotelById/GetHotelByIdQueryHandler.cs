@@ -1,16 +1,8 @@
 ﻿using AutoMapper;
 using BookingPlatform.Application.Features.Hotel.Dtos;
-using BookingPlatform.Application.Features.HotelImages.Dtos;
-using BookingPlatform.Application.Features.HotelImages.Queries.GetHotelImagesByHotelId;
 using BookingPlatform.Application.Interfaces;
-using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookingPlatform.Application.Features.Hotel.Queries.GetHotelById
 {
@@ -29,7 +21,7 @@ namespace BookingPlatform.Application.Features.Hotel.Queries.GetHotelById
         public async Task<GetHotelByIdResponse> Handle(GetHotelByIdQuery request, CancellationToken cancellationToken)
         {
             var hotelResponse = new GetHotelByIdResponse();
-            var validator = new GetHotelByIdValidator();
+            var validator = new GetHotelByIdValidator(_repository);
             try
             {
                 var validationResult = await validator.ValidateAsync(request, cancellationToken);
