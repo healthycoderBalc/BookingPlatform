@@ -41,6 +41,15 @@ namespace BookingPlatform.Application.Features.User.Commands.RegisterUser
                 }
                 else if (registerUserResponse.Success)
                 {
+                    var existingUser = await _userManager.FindByEmailAsync(request.RegisterUser.Email);
+                    if (existingUser != null)
+                    {
+                        registerUserResponse.Success = false;
+                        registerUserResponse.ValidationErrors = ["Email is already taken."];
+                        _logger.LogError("Email is already taken.");
+                        return registerUserResponse;
+                    }
+
                     var userEntity = _mapper.Map<Domain.Entities.User>(request.RegisterUser);
                     var result = await _userManager.CreateAsync(userEntity, request.RegisterUser.Password);
                     if (!result.Succeeded)

@@ -9,12 +9,12 @@ namespace BookingPlatform.Application.Features.Room.Commands.CreateRoom
     public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand, CreateRoomResponse>
     {
         private readonly IRepository<Domain.Entities.Room> _repository;
-        private readonly IRepository<Domain.Entities.Hotel> _hotelRepository;
+        private readonly IHotelRepository _hotelRepository;
         private readonly IRepository<Domain.Entities.RoomType> _roomTypeRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public CreateRoomCommandHandler(IRepository<Domain.Entities.Room> repository, IRepository<Domain.Entities.Hotel> hotelRepository, IRepository<Domain.Entities.RoomType> roomTypeRepository, IMapper mapper, ILogger<CreateRoomCommandHandler> logger)
+        public CreateRoomCommandHandler(IRepository<Domain.Entities.Room> repository, IHotelRepository hotelRepository, IRepository<Domain.Entities.RoomType> roomTypeRepository, IMapper mapper, ILogger<CreateRoomCommandHandler> logger)
         {
             _repository = repository;
             _hotelRepository = hotelRepository;

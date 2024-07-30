@@ -30,6 +30,8 @@ namespace BookingPlatform.Application.Profiles
                 .ReverseMap();
             CreateMap<City, CityUpdateDto>()
                .ReverseMap();
+            CreateMap<City, CityAdminDto>()
+                .ReverseMap();
         }
     }
 }

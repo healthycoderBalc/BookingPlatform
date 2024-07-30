@@ -10,10 +10,10 @@ namespace BookingPlatform.Application.Features.Room.Commands.CreateRoom
 {
     public class CreateRoomValidator : AbstractValidator<CreateRoomCommand>
     {
-        private readonly IRepository<Domain.Entities.Hotel> _hotelRepository;
+        private readonly IHotelRepository _hotelRepository;
         private readonly IRepository<Domain.Entities.RoomType> _roomTypeRepository;
 
-        public CreateRoomValidator(IRepository<Domain.Entities.Hotel> hotelRepository, IRepository<Domain.Entities.RoomType> roomTypeRepository)
+        public CreateRoomValidator(IHotelRepository hotelRepository, IRepository<Domain.Entities.RoomType> roomTypeRepository)
         {
             _hotelRepository = hotelRepository;
             _roomTypeRepository = roomTypeRepository;

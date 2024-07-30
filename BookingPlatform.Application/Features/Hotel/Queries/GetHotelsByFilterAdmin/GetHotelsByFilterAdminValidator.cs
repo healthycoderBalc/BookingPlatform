@@ -14,6 +14,7 @@ namespace BookingPlatform.Application.Features.Hotel.Queries.GetHotelsByFilterAd
 
             RuleFor(h => h.HotelFilter.StarRating)
                 .GreaterThanOrEqualTo(1)
+                .WithMessage("{PropertyName} should have a value between 1 and 5")
                 .LessThanOrEqualTo(5)
                 .WithMessage("{PropertyName} should have a value between 1 and 5");
 

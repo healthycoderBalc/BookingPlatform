@@ -50,6 +50,10 @@ namespace BookingPlatform.Infrastructure
                 .IsRequired()
                 .HasMaxLength(256);
 
+            modelBuilder.Entity<User>()
+                  .HasIndex(u => u.Email)
+                  .IsUnique();
+
             modelBuilder.Entity<Booking>()
                .Property(mi => mi.TotalPrice)
                .HasColumnType("decimal(18,2)");

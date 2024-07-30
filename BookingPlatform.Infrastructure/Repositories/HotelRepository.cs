@@ -41,34 +41,34 @@ namespace BookingPlatform.Infrastructure.Repositories
                         )
                     );
             }
-            else
-            {
-                DateTime today = DateTime.Today;
-                DateTime tomorrow = DateTime.Today.AddDays(1);
-                query = query.Where(
-                  h => h.Rooms.Any(r => !r.Bookings
-                      .Any(b => b.CheckInDate <= tomorrow && b.CheckOutDate >= today)
-                      )
-                  );
-            }
+            //else
+            //{
+            //    DateTime today = DateTime.Today;
+            //    DateTime tomorrow = DateTime.Today.AddDays(1);
+            //    query = query.Where(
+            //      h => h.Rooms.Any(r => !r.Bookings
+            //          .Any(b => b.CheckInDate <= tomorrow && b.CheckOutDate >= today)
+            //          )
+            //      );
+            //}
 
             if (adults.HasValue)
             {
                 query = query.Where(h => h.Rooms.Any(r => r.AdultCapacity >= adults));
             }
-            else
-            {
-                query = query.Where(h => h.Rooms.Any(r => r.AdultCapacity >= 2));
-            }
+            //else
+            //{
+            //    query = query.Where(h => h.Rooms.Any(r => r.AdultCapacity >= 2));
+            //}
 
             if (children.HasValue)
             {
                 query = query.Where(h => h.Rooms.Any(r => r.ChildrenCapacity >= children));
             }
-            else
-            {
-                query = query.Where(h => h.Rooms.Any(r => r.ChildrenCapacity >= 0));
-            }
+            //else
+            //{
+            //    query = query.Where(h => h.Rooms.Any(r => r.ChildrenCapacity >= 0));
+            //}
 
             return await query.ToListAsync();
         }

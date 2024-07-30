@@ -106,7 +106,6 @@ namespace BookingPlatform.Tests
                 .Create();
 
             _bookingRepositoryMock.Setup(repo => repo.GetByIdAsync(It.Is<int>(id => id == bookingId)))
-                .Callback<int>(id => Console.WriteLine($"Mock GetByIdAsync called with ID: {id}"))
                 .ReturnsAsync(booking);
 
             var createPaymentDto = _fixture.Build<CreatePaymentDto>()
